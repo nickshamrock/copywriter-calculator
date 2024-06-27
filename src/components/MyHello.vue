@@ -8,6 +8,8 @@ function increment() {
 </script>
 
 <template>
-  <h1>{{ count }}</h1>
-  <button @click="increment">+</button>
+  <div class="flex">
+    <h1>{{ count }}</h1>
+    <button @click="increment">+</button>
+  </div>
 </template>
