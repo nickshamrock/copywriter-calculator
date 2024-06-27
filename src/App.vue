@@ -1,9 +1,8 @@
-<script setup>
-import MyHello from './components/MyHello.vue'
-</script>
+<script setup></script>
 
 <template>
-  <MyHello />
+  <div class="mb-10 bg-red-500">Привет, мир!</div>
+  <h1 class="text-3xl font-bold underline">Hello world!</h1>
 </template>
 
 <style></style>
