@@ -11,12 +11,16 @@ const countWithSpaces = computed(() => {
   return textFromTextarea.value.length;
 });
 
-const defaultPrice = ref(100);
+/* const defaultPrice = ref('');
+
+*/
+
+const price = ref(100);
 
 const priceForText = ref('кликните на «Посчитать»');
 
 function getPriceForText() {
-  let result = (countWithoutSpaces.value / 1000) * defaultPrice.value;
+  let result = (countWithoutSpaces.value / 1000) * price.value;
   priceForText.value = result.toFixed(2) + ' руб.';
 }
 </script>
@@ -52,10 +56,12 @@ function getPriceForText() {
           <input
             type="number"
             min="0"
-            :value="defaultPrice"
+            value="100"
             autocomplete="off"
             placeholder="Введите сумму"
             class="ml-2 mr-2 w-16 rounded-xl p-1"
+            id="input-for-price"
+            v-model="price"
           />₽ за 1 000 символов без пробелов
         </p>
 
