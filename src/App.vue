@@ -1,15 +1,24 @@
 <script setup>
 import { computed, ref } from 'vue';
 
-const text = ref('');
+const textFromTextarea = ref('');
 
 const countWithoutSpaces = computed(() => {
-  return text.value.replace(/\s+/gu, '').length;
+  return textFromTextarea.value.replace(/\s+/gu, '').length;
 });
 
 const countWithSpaces = computed(() => {
-  return text.value.length;
+  return textFromTextarea.value.length;
 });
+
+const defaultPrice = ref(100);
+
+const priceForText = ref('кликните на «Посчитать»');
+
+function getPriceForText() {
+  let result = (countWithoutSpaces.value / 1000) * defaultPrice.value;
+  priceForText.value = result.toFixed(2) + ' руб.';
+}
 </script>
 
 <template>
@@ -32,7 +41,7 @@ const countWithSpaces = computed(() => {
         rows="14"
         class="block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
         placeholder="Напишите или скопируйте сюда текст..."
-        v-model="text"
+        v-model="textFromTextarea"
       ></textarea>
     </div>
 
@@ -43,7 +52,7 @@ const countWithSpaces = computed(() => {
           <input
             type="number"
             min="0"
-            value="100"
+            :value="defaultPrice"
             autocomplete="off"
             placeholder="Введите сумму"
             class="ml-2 mr-2 w-16 rounded-xl p-1"
@@ -52,7 +61,7 @@ const countWithSpaces = computed(() => {
 
         <p>
           Итоговая сумма:
-          <span class="inline-block rounded-xl bg-white p-2">кликните на «Посчитать»</span>
+          <span class="inline-block rounded-xl bg-white p-2"> {{ priceForText }} </span>
         </p>
         <p>
           Кол-во символов <strong>без пробелов</strong>:
@@ -67,13 +76,13 @@ const countWithSpaces = computed(() => {
         <button
           class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-green-500 focus:ring focus:ring-green-400 active:opacity-[0.85]"
           type="button"
+          @click="getPriceForText"
         >
           Посчитать
         </button>
         <button
           class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-red-400 focus:ring focus:ring-red-400 active:opacity-[0.85]"
           type="reset"
-          @click="increment"
         >
           Очистить
         </button>
