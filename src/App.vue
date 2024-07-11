@@ -1,4 +1,16 @@
-<script setup></script>
+<script setup>
+import { computed, ref } from 'vue';
+
+const text = ref('');
+
+const countWithoutSpaces = computed(() => {
+  return text.value.replace(/\s+/gu, '').length;
+});
+
+const countWithSpaces = computed(() => {
+  return text.value.length;
+});
+</script>
 
 <template>
   <div
@@ -20,6 +32,7 @@
         rows="14"
         class="block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
         placeholder="Напишите или скопируйте сюда текст..."
+        v-model="text"
       ></textarea>
     </div>
 
@@ -43,10 +56,11 @@
         </p>
         <p>
           Кол-во символов <strong>без пробелов</strong>:
-          <span class="inline-block rounded-xl bg-white p-2">0</span>
+          <span class="inline-block rounded-xl bg-white p-2">{{ countWithoutSpaces }}</span>
         </p>
         <p>
-          Кол-во символов с пробелами: <span class="inline-block rounded-xl bg-white p-2">0</span>
+          Кол-во символов с пробелами:
+          <span class="inline-block rounded-xl bg-white p-2">{{ countWithSpaces }}</span>
         </p>
       </div>
       <div class="flex flex-col justify-center gap-5">
@@ -59,6 +73,7 @@
         <button
           class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-red-400 focus:ring focus:ring-red-400 active:opacity-[0.85]"
           type="reset"
+          @click="increment"
         >
           Очистить
         </button>
