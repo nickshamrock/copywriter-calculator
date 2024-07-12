@@ -31,11 +31,11 @@ function clearTextArea() {
 
 <template>
   <div
-    class="m-auto flex h-fit w-4/5 flex-col items-center justify-center rounded-xl bg-blue-300 p-10 shadow-xl max-md:w-full max-sm:w-full"
+    class="m-auto flex h-fit w-4/5 flex-col items-center justify-center rounded-xl bg-blue-300 p-10 shadow-xl max-lg:w-full"
   >
     <div class="flex flex-col items-center">
       <h1
-        class="mb-4 text-center text-5xl font-bold leading-none tracking-tight text-gray-900 max-sm:text-3xl"
+        class="mb-2 text-center text-5xl font-bold leading-none tracking-tight text-gray-900 max-md:text-4xl max-sm:text-3xl"
       >
         Калькулятор копирайтера
       </h1>
@@ -53,7 +53,7 @@ function clearTextArea() {
       ></textarea>
     </div>
 
-    <div class="mt-5 flex justify-between gap-[55px] max-sm:flex-col max-sm:gap-4">
+    <div class="mt-5 flex justify-between gap-[15px] max-sm:flex-col max-sm:gap-4">
       <div class="flex flex-col gap-3">
         <p class="text-lg">
           Ставка:
