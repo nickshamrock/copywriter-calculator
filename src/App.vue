@@ -11,10 +11,6 @@ const countWithSpaces = computed(() => {
   return textFromTextarea.value.length;
 });
 
-/* const defaultPrice = ref('');
-
-*/
-
 const price = ref(100);
 
 const priceForText = ref('кликните на «Посчитать»');
@@ -22,28 +18,36 @@ const priceForText = ref('кликните на «Посчитать»');
 function getPriceForText() {
   let result = (countWithoutSpaces.value / 1000) * price.value;
   priceForText.value = result.toFixed(2) + ' руб.';
+
+  if (textFromTextarea.value === '') {
+    priceForText.value = 'Сначала введите текст!';
+  }
+}
+
+function clearTextArea() {
+  textFromTextarea.value = '';
 }
 </script>
 
 <template>
   <div
-    class="m-auto mt-5 flex h-fit w-4/5 flex-col items-center justify-center rounded-xl bg-blue-300 p-10 shadow-xl max-md:mt-0 max-md:w-full max-sm:mt-0 max-sm:w-full"
+    class="m-auto flex h-fit w-4/5 flex-col items-center justify-center rounded-xl bg-blue-300 p-10 shadow-xl max-md:w-full max-sm:w-full"
   >
     <div class="flex flex-col items-center">
       <h1
-        class="mb-4 text-center text-4xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+        class="mb-4 text-center text-5xl font-bold leading-none tracking-tight text-gray-900 max-sm:text-3xl"
       >
         Калькулятор копирайтера
       </h1>
       <label
         for="textarea"
-        class="mb-2 block text-xl font-medium text-gray-900 max-sm:text-sm dark:text-white"
+        class="mb-2 block text-xl font-medium text-gray-900 max-sm:text-center max-sm:text-lg"
         >Введите текст и нажмите на «Посчитать»</label
       >
       <textarea
         id="textarea"
         rows="14"
-        class="block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+        class="block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-base text-gray-900 max-sm:h-4/6"
         placeholder="Напишите или скопируйте сюда текст..."
         v-model="textFromTextarea"
       ></textarea>
@@ -51,7 +55,7 @@ function getPriceForText() {
 
     <div class="mt-5 flex justify-between gap-[55px] max-sm:flex-col max-sm:gap-4">
       <div class="flex flex-col gap-3">
-        <p>
+        <p class="text-lg">
           Ставка:
           <input
             type="number"
@@ -59,36 +63,37 @@ function getPriceForText() {
             value="100"
             autocomplete="off"
             placeholder="Введите сумму"
-            class="ml-2 mr-2 w-16 rounded-xl p-1"
+            class="ml-2 mr-2 w-16 rounded-xl p-1 text-lg"
             id="input-for-price"
             v-model="price"
           />₽ за 1 000 символов без пробелов
         </p>
 
-        <p>
+        <p class="text-lg">
           Итоговая сумма:
-          <span class="inline-block rounded-xl bg-white p-2"> {{ priceForText }} </span>
+          <span class="inline-block rounded-xl bg-white p-2 text-lg"> {{ priceForText }} </span>
         </p>
-        <p>
-          Кол-во символов <strong>без пробелов</strong>:
-          <span class="inline-block rounded-xl bg-white p-2">{{ countWithoutSpaces }}</span>
+        <p class="text-lg">
+          Кол-во символов без пробелов:
+          <span class="inline-block rounded-xl bg-white p-2 text-lg">{{ countWithoutSpaces }}</span>
         </p>
-        <p>
+        <p class="text-lg">
           Кол-во символов с пробелами:
-          <span class="inline-block rounded-xl bg-white p-2">{{ countWithSpaces }}</span>
+          <span class="inline-block rounded-xl bg-white p-2 text-lg">{{ countWithSpaces }}</span>
         </p>
       </div>
       <div class="flex flex-col justify-center gap-5">
         <button
-          class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-green-500 focus:ring focus:ring-green-400 active:opacity-[0.85]"
+          class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-base font-bold uppercase text-gray-900 transition-all hover:bg-green-500 focus:ring focus:ring-green-400 active:opacity-[0.85]"
           type="button"
           @click="getPriceForText"
         >
           Посчитать
         </button>
         <button
-          class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-xs font-bold uppercase text-gray-900 transition-all hover:bg-red-400 focus:ring focus:ring-red-400 active:opacity-[0.85]"
+          class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-base font-bold uppercase text-gray-900 transition-all hover:bg-red-400 focus:ring focus:ring-red-400 active:opacity-[0.85]"
           type="reset"
+          @click="clearTextArea"
         >
           Очистить
         </button>
