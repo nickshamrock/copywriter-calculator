@@ -38,9 +38,9 @@ const isModelOpen = ref(false);
 
 <template>
   <div
-    class="m-auto flex h-fit w-4/5 flex-col items-center justify-center rounded-xl bg-blue-300 p-10 shadow-xl max-lg:w-full"
+    class="m-auto flex h-fit w-4/5 flex-col items-center justify-center rounded-xl bg-blue-300 pb-10 shadow-xl max-lg:w-full"
   >
-    <div class="relative flex flex-col items-center">
+    <div class="flex flex-col items-center">
       <header>
         <h1
           class="mb-2 text-center text-5xl font-bold leading-none tracking-tight text-gray-900 max-md:text-4xl max-sm:text-3xl"
