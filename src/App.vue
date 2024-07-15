@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue';
+import ModalWindow from './components/ModalWindow.vue';
 
 const textFromTextarea = ref('');
 
@@ -27,23 +28,41 @@ function getPriceForText() {
 function clearTextArea() {
   textFromTextarea.value = '';
 }
+
+function showModal() {
+  isModelOpen.value = !isModelOpen.value;
+}
+
+const isModelOpen = ref(false);
 </script>
 
 <template>
   <div
     class="m-auto flex h-fit w-4/5 flex-col items-center justify-center rounded-xl bg-blue-300 p-10 shadow-xl max-lg:w-full"
   >
-    <div class="flex flex-col items-center">
-      <h1
-        class="mb-2 text-center text-5xl font-bold leading-none tracking-tight text-gray-900 max-md:text-4xl max-sm:text-3xl"
-      >
-        Калькулятор копирайтера
-      </h1>
+    <div class="relative flex flex-col items-center">
+      <header>
+        <h1
+          class="mb-2 text-center text-5xl font-bold leading-none tracking-tight text-gray-900 max-md:text-4xl max-sm:text-3xl"
+        >
+          Калькулятор копирайтера
+        </h1>
+      </header>
       <label
         for="textarea"
-        class="mb-2 block text-xl font-medium text-gray-900 max-sm:text-center max-sm:text-lg"
-        >Введите текст и нажмите на «Посчитать»</label
-      >
+        class="mb-2 flex items-start text-xl font-medium text-gray-900 max-sm:text-center max-sm:text-lg"
+        >Введите текст и нажмите на «Посчитать»
+        <img
+          src="/question-icon.svg"
+          alt="question"
+          width="20px"
+          height="20px"
+          class="cursor-pointer"
+          @click="showModal"
+      /></label>
+
+      <ModalWindow v-show="isModelOpen"></ModalWindow>
+
       <textarea
         id="textarea"
         rows="14"
