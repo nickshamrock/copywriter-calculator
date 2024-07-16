@@ -38,10 +38,11 @@ const isModelOpen = ref(false);
 
 <template>
   <div
-    class="m-auto flex h-fit w-4/5 flex-col items-center justify-center rounded-xl bg-blue-300 pb-10 shadow-xl max-lg:w-full"
+    class="m-auto flex h-full w-4/5 flex-col items-center rounded-xl bg-blue-300 pb-5 pl-5 pr-5 shadow-xl max-lg:w-full"
+    @keydown.esc="isModelOpen = false"
   >
     <div class="flex flex-col items-center">
-      <header>
+      <header class="pt-5">
         <h1
           class="mb-2 text-center text-5xl font-bold leading-none tracking-tight text-gray-900 max-md:text-4xl max-sm:text-3xl"
         >
@@ -55,13 +56,13 @@ const isModelOpen = ref(false);
         <img
           src="/question-icon.svg"
           alt="question"
-          width="20px"
-          height="20px"
+          width="22px"
+          height="22px"
           class="cursor-pointer"
           @click="showModal"
       /></label>
 
-      <ModalWindow v-show="isModelOpen"></ModalWindow>
+      <ModalWindow v-show="isModelOpen" @close="isModelOpen = false"></ModalWindow>
 
       <textarea
         id="textarea"
