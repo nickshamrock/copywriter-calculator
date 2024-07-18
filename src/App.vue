@@ -1,7 +1,10 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
+import gsap from 'gsap';
+
 import ModalWindow from './components/ModalWindow.vue';
 
+//логика подсчета стоимости текста
 const textFromTextarea = ref('');
 
 const countWithoutSpaces = computed(() => {
@@ -24,22 +27,44 @@ function getPriceForText() {
     priceForText.value = 'Сначала введите текст!';
   }
 }
-
+//функция очистки поля ввода текста
 function clearTextArea() {
   textFromTextarea.value = '';
 }
 
-function showModal() {
-  isModelOpen.value = !isModelOpen.value;
-}
+const showModal = ref(false);
+//анимация количества символов без пробелов в поле span
+const numberForWithoutSpaces = ref(countWithoutSpaces);
+const tweenedForWithoutSpaces = reactive({
+  number: 0
+});
 
-const isModelOpen = ref(false);
+watch(numberForWithoutSpaces, (n) => {
+  gsap.to(tweenedForWithoutSpaces, { duration: 0.5, number: Number(n) || 0 });
+});
+
+const animatedCountWithoutSpaces = computed(() => {
+  return tweenedForWithoutSpaces.number.toFixed(0);
+});
+//анимация количества символов с пробелами в поле span
+const numberForWithSpaces = ref(countWithSpaces);
+const tweenedForWithSpaces = reactive({
+  number: 0
+});
+
+watch(numberForWithSpaces, (n) => {
+  gsap.to(tweenedForWithSpaces, { duration: 0.5, number: Number(n) || 0 });
+});
+
+const animatedCountWithSpaces = computed(() => {
+  return tweenedForWithSpaces.number.toFixed(0);
+});
 </script>
 
 <template>
   <div
     class="m-auto flex h-full w-4/5 flex-col items-center rounded-xl bg-blue-300 pb-5 pl-5 pr-5 shadow-xl max-lg:w-full"
-    @keydown.esc="isModelOpen = false"
+    @keydown.esc="showModal = false"
   >
     <div class="flex flex-col items-center">
       <header class="pt-5">
@@ -58,11 +83,12 @@ const isModelOpen = ref(false);
           alt="question"
           width="22px"
           height="22px"
-          class="cursor-pointer"
-          @click="showModal"
+          class="ml-1 cursor-pointer transition-all duration-500 hover:scale-150"
+          @click="showModal = true"
+          id="show-modal"
       /></label>
 
-      <ModalWindow v-show="isModelOpen" @close="isModelOpen = false"></ModalWindow>
+      <ModalWindow :show="showModal" @close="showModal = false"> </ModalWindow>
 
       <textarea
         id="textarea"
@@ -91,15 +117,21 @@ const isModelOpen = ref(false);
 
         <p class="text-lg">
           Итоговая сумма:
-          <span class="inline-block rounded-xl bg-white p-2 text-lg"> {{ priceForText }} </span>
+          <span class="inline-block rounded-xl bg-white p-2 text-lg">
+            {{ priceForText }}
+          </span>
         </p>
         <p class="text-lg">
           Кол-во символов без пробелов:
-          <span class="inline-block rounded-xl bg-white p-2 text-lg">{{ countWithoutSpaces }}</span>
+          <span class="inline-block rounded-xl bg-white p-2 text-lg">{{
+            animatedCountWithoutSpaces
+          }}</span>
         </p>
         <p class="text-lg">
           Кол-во символов с пробелами:
-          <span class="inline-block rounded-xl bg-white p-2 text-lg">{{ countWithSpaces }}</span>
+          <span class="inline-block rounded-xl bg-white p-2 text-lg">{{
+            animatedCountWithSpaces
+          }}</span>
         </p>
       </div>
       <div class="flex flex-col justify-center gap-5">
