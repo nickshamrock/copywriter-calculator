@@ -6,12 +6,11 @@ import CalculatePriceMenu from './components/CalculatePriceMenu.vue';
 
 //логика подсчета стоимости текста
 const textFromTextarea = ref('');
-
 //получаем очистку поля ввода текста с помощью emit из дочернего компонента CalculatePriceMenu
 function clearArea() {
   textFromTextarea.value = '';
 }
-
+//условие показа модального окна
 const showModal = ref(false);
 </script>
 
@@ -51,7 +50,7 @@ const showModal = ref(false);
         placeholder="Напишите или скопируйте сюда текст..."
         v-model="textFromTextarea"
       ></textarea>
-      <!-- меню с расчетом стоимости текста -->
+      <!-- меню с расчетом стоимости текста, в props - текст из textarea; в emit - cигнал для удаления текста из textarea-->
       <CalculatePriceMenu :text="textFromTextarea" @makeEmptyArea="clearArea"></CalculatePriceMenu>
     </div>
   </div>

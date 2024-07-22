@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch, reactive, computed } from 'vue';
 import gsap from 'gsap';
-
 //получаем из родительского компонента текст, введеный textarea
 const props = defineProps({
   text: String
