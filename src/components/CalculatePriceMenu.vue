@@ -22,14 +22,14 @@ function getPriceForText() {
     priceForText.value = 'Сначала введите текст!';
   }
 }
-//функция очистки поля ввода текста c передачей в родительский компонент
+
 const emit = defineEmits(['makeEmptyArea']);
 const emptyLine = '';
 function clearTextArea() {
   emit('makeEmptyArea', emptyLine);
   priceForText.value = 'Введите текст';
 }
-//анимация количества символов без пробелов в поле span + computed полученных значений
+
 const numberForWithoutSpaces = ref(countWithoutSpaces);
 const tweenedForWithoutSpaces = reactive({
   number: 0
@@ -42,7 +42,7 @@ watch(numberForWithoutSpaces, (n) => {
 const animatedCountWithoutSpaces = computed(() => {
   return tweenedForWithoutSpaces.number.toFixed(0);
 });
-//анимация количества символов с пробелами в поле span + computed полученных значений
+
 const numberForWithSpaces = ref(countWithSpaces);
 const tweenedForWithSpaces = reactive({
   number: 0
