@@ -14,42 +14,37 @@ const showModal = ref(false);
 </script>
 
 <template>
-  <div
-    class="m-auto flex h-full w-4/5 flex-col items-center rounded-xl bg-blue-300 pb-10 pl-5 pr-5 shadow-xl max-lg:w-full"
-    @keydown.esc="showModal = false"
-  >
-    <div class="flex flex-col items-center">
+  <main class="m-auto flex h-full w-full flex-col items-center px-5 pb-10">
+    <section class="relative flex flex-col items-center">
       <header class="pt-5">
-        <h1
-          class="mb-2 text-center text-5xl font-bold leading-none tracking-tight text-gray-900 max-md:text-4xl max-sm:text-3xl"
-        >
+        <h1 class="mb-2 text-center text-5xl text-gray-900 max-md:text-4xl max-sm:text-3xl">
           Калькулятор копирайтера
         </h1>
       </header>
-      <label
-        for="textarea"
-        class="mb-2 flex items-start text-xl font-medium text-gray-900 max-sm:text-center max-sm:text-lg"
-        >Введите текст и нажмите на «Посчитать»
+      <div class="mb-2 flex gap-1">
+        <label for="textarea" class="text-xl text-gray-900 max-sm:text-center max-sm:text-lg"
+          >Введите текст и нажмите на «Посчитать»
+        </label>
         <img
           src="/question-icon.svg"
           alt="question"
-          width="22px"
-          height="22px"
-          class="ml-1 cursor-pointer transition-all duration-500 hover:scale-150"
+          width="20px"
+          height="20px"
+          class="cursor-pointer transition-all duration-500 hover:scale-150"
           @click="showModal = true"
-          id="show-modal"
-      /></label>
+        />
+      </div>
 
       <ModalWindow :show="showModal" @close="showModal = false"> </ModalWindow>
 
       <textarea
         id="textarea"
-        rows="14"
-        class="block w-full resize-none rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-base text-gray-900 max-sm:h-4/6"
+        rows="12"
+        class="w-full resize-none rounded-lg p-2.5 text-base text-gray-900"
         placeholder="Напишите или скопируйте сюда текст..."
         v-model="textFromTextarea"
       ></textarea>
       <CalculatePriceMenu :text="textFromTextarea" @makeEmptyArea="clearArea"></CalculatePriceMenu>
-    </div>
-  </div>
+    </section>
+  </main>
 </template>

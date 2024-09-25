@@ -7,7 +7,7 @@ defineProps({
 <template>
   <Transition name="modal">
     <div
-      class="fixed left-0 top-0 z-50 flex h-full w-full bg-black/55 transition-opacity duration-500 ease-out"
+      class="fixed left-0 top-0 z-50 flex h-full w-full overflow-y-auto bg-black/55 transition-opacity duration-500 ease-out"
       v-show="show"
     >
       <div

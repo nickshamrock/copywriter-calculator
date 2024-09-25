@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, reactive, computed } from 'vue';
 import gsap from 'gsap';
-//получаем из родительского компонента текст, введеный textarea
+
 const props = defineProps({
   text: String
 });
@@ -13,7 +13,7 @@ const countWithSpaces = computed(() => {
 });
 const price = ref(100);
 const priceForText = ref('кликните на «Посчитать»');
-//функция подсчета стоимости за текст без пробелов
+
 function getPriceForText() {
   let result = (countWithoutSpaces.value / 1000) * price.value;
   priceForText.value = result.toFixed(2) + ' руб.';
