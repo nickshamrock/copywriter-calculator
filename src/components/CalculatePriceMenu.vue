@@ -5,104 +5,83 @@ import gsap from 'gsap';
 const props = defineProps({
   text: String
 });
-const countWithoutSpaces = computed(() => {
-  return props.text.replace(/\s+/gu, '').length;
-});
-const countWithSpaces = computed(() => {
-  return props.text.length;
-});
+
 const price = ref(100);
 const priceForText = ref('кликните на «Посчитать»');
 
-function getPriceForText() {
-  let result = (countWithoutSpaces.value / 1000) * price.value;
-  priceForText.value = result.toFixed(2) + ' руб.';
+const countWithoutSpaces = computed(() => props.text.replace(/\s+/gu, '').length);
+const countWithSpaces = computed(() => props.text.length);
 
-  if (props.text === '') {
+function getPriceForText() {
+  if (!props.text) {
     priceForText.value = 'Сначала введите текст!';
+    return;
   }
+  const result = (countWithoutSpaces.value / 1000) * price.value;
+  priceForText.value = `${result.toFixed(2)} руб.`;
 }
 
 const emit = defineEmits(['makeEmptyArea']);
-const emptyLine = '';
 function clearTextArea() {
-  emit('makeEmptyArea', emptyLine);
+  emit('makeEmptyArea', '');
   priceForText.value = 'Введите текст';
 }
 
-const numberForWithoutSpaces = ref(countWithoutSpaces);
-const tweenedForWithoutSpaces = reactive({
-  number: 0
-});
+const createAnimatedCount = (count) => {
+  const tweened = reactive({ number: 0 });
 
-watch(numberForWithoutSpaces, (n) => {
-  gsap.to(tweenedForWithoutSpaces, { duration: 0.5, number: Number(n) || 0 });
-});
+  watch(count, (newValue) => {
+    gsap.to(tweened, { duration: 0.5, number: Number(newValue) });
+  });
 
-const animatedCountWithoutSpaces = computed(() => {
-  return tweenedForWithoutSpaces.number.toFixed(0);
-});
+  return computed(() => tweened.number.toFixed(0));
+};
 
-const numberForWithSpaces = ref(countWithSpaces);
-const tweenedForWithSpaces = reactive({
-  number: 0
-});
-
-watch(numberForWithSpaces, (n) => {
-  gsap.to(tweenedForWithSpaces, { duration: 0.5, number: Number(n) || 0 });
-});
-
-const animatedCountWithSpaces = computed(() => {
-  return tweenedForWithSpaces.number.toFixed(0);
-});
+const animatedCountWithoutSpaces = createAnimatedCount(countWithoutSpaces);
+const animatedCountWithSpaces = createAnimatedCount(countWithSpaces);
 </script>
+
 <template>
   <div class="mt-5 flex justify-between gap-[15px] max-sm:flex-col max-sm:gap-4">
-    <div class="flex flex-col gap-3">
-      <p class="text-lg">
+    <div class="flex flex-col gap-3 text-lg">
+      <p>
         Ставка:
         <input
           type="number"
           min="0"
           value="100"
-          autocomplete="off"
           placeholder="Введите сумму"
-          class="ml-2 mr-2 w-16 rounded-xl p-1 text-lg"
+          class="ml-2 mr-2 w-16 rounded-xl p-1"
           id="input-for-price"
           v-model="price"
         />₽ за 1 000 символов без пробелов
       </p>
 
-      <p class="text-lg">
+      <p>
         Итоговая сумма:
-        <span class="inline-block rounded-xl bg-white p-2 text-lg">
+        <span class="inline-block rounded-xl bg-white p-2">
           {{ priceForText }}
         </span>
       </p>
-      <p class="text-lg">
+      <p>
         Кол-во символов без пробелов:
-        <span class="inline-block rounded-xl bg-white p-2 text-lg">{{
-          animatedCountWithoutSpaces
-        }}</span>
+        <span class="inline-block rounded-xl bg-white p-2">{{ animatedCountWithoutSpaces }}</span>
       </p>
-      <p class="text-lg">
+      <p>
         Кол-во символов с пробелами:
-        <span class="inline-block rounded-xl bg-white p-2 text-lg">{{
-          animatedCountWithSpaces
-        }}</span>
+        <span class="inline-block rounded-xl bg-white p-2">{{ animatedCountWithSpaces }}</span>
       </p>
     </div>
     <div class="flex flex-col justify-center gap-5">
       <button
-        class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-base font-bold uppercase text-gray-900 transition-all hover:bg-green-500 focus:ring focus:ring-green-400 active:opacity-[0.85]"
+        class="rounded-full bg-white px-6 py-3 text-base font-bold uppercase hover:bg-green-400 active:bg-green-600"
         type="button"
         @click="getPriceForText"
       >
         Посчитать
       </button>
       <button
-        class="select-none rounded-full border border-gray-900 bg-white px-6 py-3 text-center align-middle text-base font-bold uppercase text-gray-900 transition-all hover:bg-red-400 focus:ring focus:ring-red-400 active:opacity-[0.85]"
-        type="reset"
+        class="rounded-full bg-white px-6 py-3 text-base font-bold uppercase hover:bg-red-400 active:bg-red-600"
         @click="clearTextArea"
       >
         Очистить

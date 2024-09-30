@@ -3,6 +3,7 @@ import { ref } from 'vue';
 
 import ModalWindow from './components/ModalWindow.vue';
 import CalculatePriceMenu from './components/CalculatePriceMenu.vue';
+import QuestionIcon from './components/icons-for-close-open/QuestionIcon.vue';
 
 const textFromTextarea = ref('');
 
@@ -25,14 +26,8 @@ const showModal = ref(false);
         <label for="textarea" class="text-xl text-gray-900 max-sm:text-center max-sm:text-lg"
           >Введите текст и нажмите на «Посчитать»
         </label>
-        <img
-          src="/question-icon.svg"
-          alt="question"
-          width="20px"
-          height="20px"
-          class="cursor-pointer transition-all duration-500 hover:scale-150"
-          @click="showModal = true"
-        />
+
+        <QuestionIcon @click="showModal = true" />
       </div>
 
       <ModalWindow :show="showModal" @close="showModal = false"> </ModalWindow>

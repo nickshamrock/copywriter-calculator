@@ -1,4 +1,6 @@
 <script setup>
+import CloseIcon from './icons-for-close-open/CloseIcon.vue';
+
 defineProps({
   show: Boolean
 });
@@ -7,7 +9,7 @@ defineProps({
 <template>
   <Transition name="modal">
     <div
-      class="fixed left-0 top-0 z-50 flex h-full w-full overflow-y-auto bg-black/55 transition-opacity duration-500 ease-out"
+      class="fixed inset-0 z-50 flex h-full w-full overflow-y-auto bg-black/55 transition-opacity duration-500 ease-out"
       v-show="show"
     >
       <div
@@ -15,22 +17,16 @@ defineProps({
       >
         <div class="mb-2 flex justify-between">
           <h2 class="text-xl font-semibold text-black">Зачем нужен этот калькулятор</h2>
-          <img
-            src="/closeModal-icon.svg"
-            width="35px"
-            height="35px"
-            class="block cursor-pointer transition-all duration-500 hover:scale-150"
-            alt="closeModalWindow"
-            @click="$emit('close')"
-          />
+
+          <CloseIcon @click="$emit('close')" />
         </div>
 
         <p>
           Обычно стоимость текста рассчитывают вручную через эту формулу:
           <span class="font-semibold"> (кол-во символов без пробелов / 1000) * ставка</span> за 1
           000 символов без пробелов. Редактору приходится проверять, правильно ли он посчитал
-          символы, вспоминать ставку и тратить время на расчеты. Этот сервис полностью
-          автоматизирует и ускоряет процесс подсчета, а также избавляет от ошибок в расчетах.
+          символы, вспоминать ставку и тем самым тратить лишнее время на расчеты. Этот сервис
+          полностью автоматизирует эту задачу, а также избавляет от ошибок в расчетах.
         </p>
 
         <p class="mt-5">Автор: nickshamrock</p>
