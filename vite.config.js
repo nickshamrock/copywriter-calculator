@@ -7,7 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/pet-vue/',
+  base: '/copywriter-calculator/',
   plugins: [vue(), vueJsx(), vueDevTools()],
   resolve: {
     alias: {
